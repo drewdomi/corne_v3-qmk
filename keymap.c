@@ -59,7 +59,7 @@ enum {
 // Hold for right Alt, tap "L" (home row mods)
 #define HM_L RALT_T(KC_L)
 // Hold for right Super, tap ";" (home row mods)
-#define HM_SCLN RGUI_T(KC_SCLN)
+#define HM_SCLN LGUI_T(KC_SCLN)
 // Mod-tap hold LOWER layer, tap Space
 #define LOWER_SPC LT(_LOWER, KC_SPC)
 // Mod-tap hold UPPER layer, tap Space
@@ -82,13 +82,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     /* BASE
      * ,-----------------------------------------.                    ,-----------------------------------------.
-     * | Tab/ |   Q  |   W  |   E  |   R  |   T  |                    |   Y  |   U  |   I  |   O  |   P  | Bksp |
-     * |  Esc |      |      |      |      |      |                    |      |      |      |      |      |      |
+     * | Tab  |   Q  |   W  |   E  |   R  |   T  |                    |   Y  |   U  |   I  |   O  |   P  | Bksp |
+     * | Esc  |      |      |      |      |      |                    |      |      |      |      |      |      |
      * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
      * | Ctrl |   A  |   S  |   D  |   F  |   G  |                    |   H  |   J  |   K  |   L  |   ;  |  '   |
-     * |      | GUI/ | ALT/ | CTL/ | SFT/ |      |                    |      | SFT/ | CTL/ | ALT/ | GUI/ |      |
+     * |      |  GUI |  ALT |  CTL |  SFT |      |                    |      | RSFT | RCTL | RALT |  GUI |      |
      * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
-     * |Caps/ |   Z  |   X  |   C  |   V  |   B  |                    |   N  |   M  |   ,  |   .  |   /  |Shift |
+     * |Caps  |   Z  |   X  |   C  |   V  |   B  |                    |   N  |   M  |   ,  |   .  |   /  |Shift |
      * |Shift |      |      |      |      |      |                    |      |      |      |      |      |      |
      * `------+------+------+------+------+------+------.      ,------+------+------+------+------+------+------'
      *                             | GUI  |UPPER |Del   |      |Ent   |LOWER | ALT  |
@@ -148,11 +148,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     /* EXTRAS (Midia, Brighness and RGB)
      * ,-----------------------------------------.                    ,-----------------------------------------.
-     * |RGB   | Prev | Next |Play/ | Vol- | Vol+ |                    |      |      |      |      |      |Reset |
-     * |Effect|      |      |Pause |      |      |                    |      |      |      |      |      |      |
+     * |RGB   |Prev  |Next  |Play/ | Vol- | Vol+ |                    |      |      |      |      |      |Reset |
+     * |Effect|Media |Media |Pause |      |      |                    |      |      |      |      |      |      |
      * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
-     * |Boot  |      |      |      |      |Brght+|                    |Speed+| Hue+ | Sat+ | Val+ |      |Boot  |
-     * |      |      |      |      |      |      |                    |      |      |      |      |      |      |
+     * |BOOT  |      |      |      |      |Brght+|                    |Speed+| Hue+ | Sat+ | Val+ |      |BOOT  |
+     * |Mode  |      |      |      |      |      |                    |      |      |      |      |      |Mode  |
      * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
      * |Reset |      |      |      |      |Brght-|                    |Speed-| Hue- | Sat- | Val- |      |RGB   |
      * |      |      |      |      |      |      |                    |      |      |      |      |      |Toggle|
@@ -217,6 +217,41 @@ bool get_ignore_mod_tap_interrupt(uint16_t keycode, keyrecord_t *record) {
     }
 }
 
+#ifdef TAP_FLOW_ENABLE
+    uint16_t get_tap_flow_term(uint16_t keycode, keyrecord_t *record) {
+        switch (keycode) {
+            case HM_A:
+            case HM_S:
+            case HM_D:
+            case HM_F:
+            case HM_J:
+            case HM_K:
+            case HM_L:
+            case HM_SCLN:
+                return TAP_FLOW_TERM;
+            default:
+                return 0;
+        }
+    }
+
+    bool is_tap_flow_key(uint16_t keycode, keyrecord_t *record) {
+        switch (keycode) {
+            case HM_A:
+            case HM_S:
+            case HM_D:
+            case HM_F:
+            case HM_J:
+            case HM_K:
+            case HM_L:
+            case HM_SCLN:
+                return true;
+            default:
+                return false;
+        }
+    }
+#endif
+
+
 #if defined(ENCODER_MAP_ENABLE)
     const uint16_t PROGMEM encoder_map[][NUM_ENCODERS][NUM_DIRECTIONS] = {
         [_BASE] = {ENCODER_CCW_CW(KC_VOLD, KC_VOLU)},
@@ -241,9 +276,8 @@ bool get_ignore_mod_tap_interrupt(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case EE_CLR:
             if (record->event.pressed) {
-                // This will reset all EEPROM settings including RGB
                 eeconfig_init();
-                // Set RGB defaults after EEPROM clear
+
                 rgb_matrix_enable();
                 rgb_matrix_mode(RGB_MATRIX_SOLID_COLOR);
                 rgb_matrix_sethsv(128, 255, 80);
@@ -268,10 +302,10 @@ bool get_ignore_mod_tap_interrupt(uint16_t keycode, keyrecord_t *record) {
         
          oled_set_cursor(0, 1);
         if (bootloader) {
-            oled_write_P(PSTR("Awaiting\n"), false);
+            oled_write_P(PSTR("Updating\n"), false);
             oled_write_P(PSTR("firmware..."), false);
         } else {
-            oled_write_P(PSTR("Rebooting..."), false);
+            oled_write_P(PSTR("Reseting..."), false);
         }
         
         oled_render_dirty(true);

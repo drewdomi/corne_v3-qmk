@@ -28,6 +28,8 @@
 #define QUICK_TAP_TERM 190             // Quick tap term (ms) for rapid typing
 #define TAPPING_TOGGLE 2               // Number of taps to toggle layer
 #define DEBOUNCE 5                     // Switch debounce time (ms)
+#define TAP_FLOW_ENABLE                // Enable Tap Flow feature
+#define TAP_FLOW_TERM 150              // Time window (ms) to disable holds during fast typing
 
 // // === TAP-HOLD BEHAVIOR ===
 #define HOLD_ON_OTHER_KEY_PRESS        // Trigger hold on other key press
