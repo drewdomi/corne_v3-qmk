@@ -41,7 +41,7 @@ enum layers {
 };
 
 enum {
-    TD_TAB_ESC,
+    TAB_ESC,
 };
 
 // Hold for left Super, tap "A" (home row mods)
@@ -72,8 +72,11 @@ enum {
 #define CAPS_SFT MT(MOD_LSFT, KC_CAPS)
 
 tap_dance_action_t tap_dance_actions[] = {
-    [TD_TAB_ESC] = ACTION_TAP_DANCE_DOUBLE(KC_TAB, KC_ESC),
+    [TAB_ESC] = ACTION_TAP_DANCE_DOUBLE(KC_TAB, KC_ESC),
 };
+
+// Tap-Dance, single tab for "Tab" double for "Esc"
+#define TD_TAB_ESC TD(TAB_ESC)
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
@@ -85,17 +88,17 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * | Ctrl |   A  |   S  |   D  |   F  |   G  |                    |   H  |   J  |   K  |   L  |   ;  |  '   |
      * |      | GUI/ | ALT/ | CTL/ | SFT/ |      |                    |      | SFT/ | CTL/ | ALT/ | GUI/ |      |
      * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
-     * |Caps/ |   Z  |   X  |   C  |   V  |   B  |                    |   N  |   M  |   ,  |   .  |   /  |  `   |
+     * |Caps/ |   Z  |   X  |   C  |   V  |   B  |                    |   N  |   M  |   ,  |   .  |   /  |Shift |
      * |Shift |      |      |      |      |      |                    |      |      |      |      |      |      |
      * `------+------+------+------+------+------+------.      ,------+------+------+------+------+------+------'
-     *                             | GUI  |UPPER |Del   |      | Ent  |LOWER | ALT  |
-     *                             |      |Space |EXTRAS|      |      |Space |      |
+     *                             | GUI  |UPPER |Del   |      |Ent   |LOWER | ALT  |
+     *                             |      |Space |EXTRAS|      |EXTRAS|Space |      |
      *                             `--------------------'      `--------------------'
      */
     [_BASE] = LAYOUT_split_3x6_3(
-        TD(TD_TAB_ESC), KC_Q,    KC_W,   KC_E,    KC_R,    KC_T,           KC_Y,    KC_U,      KC_I,    KC_O,    KC_P,    KC_BSPC,
+        TD_TAB_ESC,     KC_Q,    KC_W,   KC_E,    KC_R,    KC_T,           KC_Y,    KC_U,      KC_I,    KC_O,    KC_P,    KC_BSPC,
         KC_LCTL,        HM_A,    HM_S,   HM_D,    HM_F,    KC_G,           KC_H,    HM_J,      HM_K,    HM_L,    HM_SCLN, KC_QUOT,
-        CAPS_SFT,       KC_Z,    KC_X,   KC_C,    KC_V,    KC_B,           KC_N,    KC_M,      KC_COMM, KC_DOT,  KC_SLSH, KC_GRV,
+        CAPS_SFT,       KC_Z,    KC_X,   KC_C,    KC_V,    KC_B,           KC_N,    KC_M,      KC_COMM, KC_DOT,  KC_SLSH, KC_RSFT,
                                  KC_LGUI, UPPER_SPC, DEL_EXT,              DEL_ENT,  LOWER_SPC, KC_RALT
     ),
 
@@ -182,6 +185,38 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
     }
 }
 
+bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
+        case HM_A:
+        case HM_S:
+        case HM_D:
+        case HM_F:
+        case HM_J:
+        case HM_K:
+        case HM_L:
+        case HM_SCLN:
+            return true;
+        default:
+            return false;
+    }
+}
+
+bool get_ignore_mod_tap_interrupt(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
+        case HM_A:
+        case HM_S:
+        case HM_D:
+        case HM_F:
+        case HM_J:
+        case HM_K:
+        case HM_L:
+        case HM_SCLN:
+            return true;
+        default:
+            return false;
+    }
+}
+
 #if defined(ENCODER_MAP_ENABLE)
     const uint16_t PROGMEM encoder_map[][NUM_ENCODERS][NUM_DIRECTIONS] = {
         [_BASE] = {ENCODER_CCW_CW(KC_VOLD, KC_VOLU)},
@@ -193,12 +228,31 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
 
 #ifdef RGB_MATRIX_ENABLE
     void keyboard_post_init_user(void) {
-        rgb_matrix_enable_noeeprom();
+        rgb_matrix_enable();
 
-        rgb_matrix_mode_noeeprom(RGB_MATRIX_SOLID_COLOR);
-    
-        rgb_matrix_sethsv_noeeprom(128, 255, 80);
+        if (!eeconfig_is_enabled()) {
+            eeconfig_init();
+            rgb_matrix_mode(RGB_MATRIX_SOLID_COLOR);
+            rgb_matrix_sethsv(128, 255, 80);
+        }
     }
+
+    bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
+        case EE_CLR:
+            if (record->event.pressed) {
+                // This will reset all EEPROM settings including RGB
+                eeconfig_init();
+                // Set RGB defaults after EEPROM clear
+                rgb_matrix_enable();
+                rgb_matrix_mode(RGB_MATRIX_SOLID_COLOR);
+                rgb_matrix_sethsv(128, 255, 80);
+            }
+            return true;
+        default:
+            return true;
+    }
+}
 #endif
 
 

@@ -29,9 +29,10 @@
 #define TAPPING_TOGGLE 2               // Number of taps to toggle layer
 #define DEBOUNCE 5                     // Switch debounce time (ms)
 
-// === TAP-HOLD BEHAVIOR ===
-#define PERMISSIVE_HOLD                // More permissive hold behavior
-#define RETRO_TAPPING                  // Allow tapping after hold timeout
+// // === TAP-HOLD BEHAVIOR ===
+#define HOLD_ON_OTHER_KEY_PRESS        // Trigger hold on other key press
+#define TAPPING_FORCE_HOLD             // Force hold behavior for repeated keys
+
 
 // === RGB MATRIX CONFIGURATION ===
 #ifdef RGB_MATRIX_ENABLE
@@ -41,7 +42,11 @@
     #define RGB_MATRIX_DEFAULT_VAL 80          // Default brightness
     #define RGB_MATRIX_DEFAULT_HUE 128         // Default color (0-255)
     #define RGB_MATRIX_DEFAULT_SAT 255         // Default saturation
-    #define RGB_MATRIX_DEFAULT_MODE RGB_MATRIX_SOLID_COLOR // Default effect
+    #define RGB_MATRIX_DEFAULT_MODE RGB_MATRIX_CYCLE_OUT_IN // Default effect
+
+    // Enable EEPROM storage for RGB settings
+    #define RGB_MATRIX_FRAMEBUFFER_EFFECTS     // Enable framebuffer effects
+    #define RGB_MATRIX_KEYPRESSES              // Enable keypress effects
     
     #define ENABLE_RGB_MATRIX_SOLID_COLOR           // Static color
     #define ENABLE_RGB_MATRIX_BREATHING             // Breathing effect
