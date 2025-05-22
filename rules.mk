@@ -1,4 +1,4 @@
-# Clover (crkbd) Corne Split - Build Configuration
+# Clover - Corne V3 (crkbd) - Build Configuration
 # -------------------------------------------
 # This file defines which QMK features are enabled for the firmware build
 # Including RGB, OLED, encoders, and other custom functionality.
@@ -45,9 +45,3 @@ QMK_SETTINGS = yes          # Enable QMK settings
 
 # Build Optimizations
 LTO_ENABLE = yes            # Link Time Optimization (reduces firmware size)
-
-# Optional Features (currently disabled)
-# KEY_OVERRIDE_ENABLE = yes
-# AUTO_SHIFT_ENABLE = yes
-# SERIAL_DRIVER = vendor
-# WS2812_DRIVER = vendor

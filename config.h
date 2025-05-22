@@ -6,7 +6,7 @@
  *
  * File: config.h
  * Version: 1.0
- * Last updated: May 21, 2025
+ * Last updated: May 22, 2025
  */
 
 #pragma once
@@ -71,7 +71,7 @@
 // === OLED CONFIGURATION ===
 #ifdef OLED_ENABLE
     #define OLED_DISPLAY_128X32            // OLED display resolution
-    #define OLED_TIMEOUT 30000             // OLED timeout in milliseconds (30 seconds)
+    #define OLED_TIMEOUT 60000             // OLED timeout in milliseconds (60 seconds)
     #define OLED_BRIGHTNESS 128            // Default OLED brightness
     #define OLED_SCROLL_TIMEOUT 0          // Disable scroll timeout
 #endif

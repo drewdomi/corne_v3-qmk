@@ -1,7 +1,7 @@
 /*
- * Copyright (c) 2023-2025 Andrew Domingues
+ * Copyright (c) 2023-2025 Andrew Domingues <contact@drewdomi.com>
  *
- * Corne (crkbd) Clover - Custom Keymap
+ * Clover - Corne V3 (crkbd)
  * --------------------------------------------------------
  * Features:
  *   - Tap-Dance for Tab/Esc
@@ -14,7 +14,7 @@
  *
  * File: keymap.c
  * Version: 1.0
- * Last updated: May 17, 2025
+ * Last updated: May 22, 2025
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -86,7 +86,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * | Esc  |      |      |      |      |      |                    |      |      |      |      |      |      |
      * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
      * | Ctrl |   A  |   S  |   D  |   F  |   G  |                    |   H  |   J  |   K  |   L  |   ;  |  '   |
-     * |      |  GUI |  ALT |  CTL |  SFT |      |                    |      | RSFT | RCTL | RALT |  GUI |      |
+     * |      | LGUI | LALT | LCTL | LSFT |      |                    |      | RSFT | RCTL | RALT | LGUI |      |
      * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
      * |Caps  |   Z  |   X  |   C  |   V  |   B  |                    |   N  |   M  |   ,  |   .  |   /  |Shift |
      * |Shift |      |      |      |      |      |                    |      |      |      |      |      |      |
@@ -146,10 +146,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                    KC_NO,   KC_NO,   KC_NO,                       KC_NO,   KC_NO,   KC_NO
     ),
 
-    /* EXTRAS (Midia, Brighness and RGB)
+    /* EXTRAS (Midia, Brighness & RGB light)
      * ,-----------------------------------------.                    ,-----------------------------------------.
      * |RGB   |Prev  |Next  |Play/ | Vol- | Vol+ |                    |      |      |      |      |      |Reset |
-     * |Effect|Media |Media |Pause |      |      |                    |      |      |      |      |      |      |
+     * |Efcts |Media |Media |Pause |      |      |                    |      |      |      |      |      |      |
      * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
      * |BOOT  |      |      |      |      |Brght+|                    |Speed+| Hue+ | Sat+ | Val+ |      |BOOT  |
      * |Mode  |      |      |      |      |      |                    |      |      |      |      |      |Mode  |
@@ -169,7 +169,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     )
 };
 
-uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
+static bool is_homerow_mod(uint16_t keycode) {
     switch (keycode) {
         case HM_A:
         case HM_S:
@@ -179,78 +179,33 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
         case HM_K:
         case HM_L:
         case HM_SCLN:
-            return TAPPING_TERM;
+            return true;
         default:
-            return QUICK_TAP_TERM;
+            return false;
     }
+}
+
+uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
+    return is_homerow_mod(keycode) ? TAPPING_TERM : QUICK_TAP_TERM;
 }
 
 bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record) {
-    switch (keycode) {
-        case HM_A:
-        case HM_S:
-        case HM_D:
-        case HM_F:
-        case HM_J:
-        case HM_K:
-        case HM_L:
-        case HM_SCLN:
-            return true;
-        default:
-            return false;
-    }
+    return is_homerow_mod(keycode);
 }
 
 bool get_ignore_mod_tap_interrupt(uint16_t keycode, keyrecord_t *record) {
-    switch (keycode) {
-        case HM_A:
-        case HM_S:
-        case HM_D:
-        case HM_F:
-        case HM_J:
-        case HM_K:
-        case HM_L:
-        case HM_SCLN:
-            return true;
-        default:
-            return false;
-    }
+    return is_homerow_mod(keycode);
 }
 
 #ifdef TAP_FLOW_ENABLE
     uint16_t get_tap_flow_term(uint16_t keycode, keyrecord_t *record) {
-        switch (keycode) {
-            case HM_A:
-            case HM_S:
-            case HM_D:
-            case HM_F:
-            case HM_J:
-            case HM_K:
-            case HM_L:
-            case HM_SCLN:
-                return TAP_FLOW_TERM;
-            default:
-                return 0;
-        }
+        return is_homerow_mod(keycode) ? TAP_FLOW_TERM : 0;
     }
 
     bool is_tap_flow_key(uint16_t keycode, keyrecord_t *record) {
-        switch (keycode) {
-            case HM_A:
-            case HM_S:
-            case HM_D:
-            case HM_F:
-            case HM_J:
-            case HM_K:
-            case HM_L:
-            case HM_SCLN:
-                return true;
-            default:
-                return false;
-        }
+        return is_homerow_mod(keycode);
     }
 #endif
-
 
 #if defined(ENCODER_MAP_ENABLE)
     const uint16_t PROGMEM encoder_map[][NUM_ENCODERS][NUM_DIRECTIONS] = {
