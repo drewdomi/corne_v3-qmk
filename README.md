@@ -23,7 +23,7 @@ No seu arquivo `config.h`, adicione estas definições para um comportamento mai
 ```c
 #define IGNORE_MOD_TAP_INTERRUPT
 #define PERMISSIVE_HOLD
-#define TAPPING_TERM 200
+#define TAPPING_TERM 300
 #define TAPPING_TERM_PER_KEY
 ```
 
@@ -38,3 +38,18 @@ No seu arquivo `config.h`, adicione estas definições para um comportamento mai
 3. RGB foi implementado usando funções nativas do QMK
 
 4. A camada Extras contém funções similares às de Bluetooth do ZMK, mas adaptadas para RGB e reset no QMK
+
+
+### Commands
+
+compile
+```
+qmk compile -kb crkbd/rev1 -km crkbd_clover
+```
+
+flash each side
+
+```
+qmk flash -kb crkbd/rev1 -km crkbd_clover -bl avrdude-split-left
+qmk flash -kb crkbd/rev1 -km crkbd_clover -bl avrdude-split-right
+```

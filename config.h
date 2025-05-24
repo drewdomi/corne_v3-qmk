@@ -23,9 +23,9 @@
 #define ENCODER_RESOLUTION 4           // Encoder sensitivity (steps per detent)
 
 // === TAPPING AND TIMING CONFIGURATION ===
-#define TAPPING_TERM 265               // Base tapping term (ms) for mod-tap keys
+#define TAPPING_TERM 300               // Base tapping term (ms) for mod-tap keys
 #define TAPPING_TERM_PER_KEY           // Enable per-key tapping term customization
-#define QUICK_TAP_TERM 190             // Quick tap term (ms) for rapid typing
+#define QUICK_TAP_TERM 200             // Quick tap term (ms) for rapid typing
 #define TAPPING_TOGGLE 2               // Number of taps to toggle layer
 #define DEBOUNCE 5                     // Switch debounce time (ms)
 #define TAP_FLOW_ENABLE                // Enable Tap Flow feature
