@@ -44,21 +44,21 @@ enum {
     TAB_ESC,
 };
 
-// Hold for left Super, tap "A" (home row mods)
+// Left Super when held,"A" when tapped (home row mods)
 #define HM_A LGUI_T(KC_A)
-// Hold for left Alt, tap "S" (home row mods)
+// Left Alt when held,"S" when tapped (home row mods)
 #define HM_S LALT_T(KC_S)
-// Hold for left Control, tap "D" (home row mods)
+// Left Control when held,"D" when tapped (home row mods)
 #define HM_D LCTL_T(KC_D)
-// Hold for left Shift, tap "F" (home row mods)
+// Left Shift when held, "F" when tapped (home row mods)
 #define HM_F LSFT_T(KC_F)
-// Hold for right Shift, tap "J" (home row mods)
+// Right Shift when held, "J" when tapped (home row mods)
 #define HM_J RSFT_T(KC_J)
-// Hold for right Control, tap "K" (home row mods)
+// Right Control when held, "K" when tapped (home row mods)
 #define HM_K RCTL_T(KC_K)
-// Hold for right Alt, tap "L" (home row mods)
+// Right Alt when held, "L" when tapped (home row mods)
 #define HM_L RALT_T(KC_L)
-// Hold for right Super, tap ";" (home row mods)
+// Right Super when held, ";" when tapped (home row mods)
 #define HM_SCLN LGUI_T(KC_SCLN)
 // Mod-tap hold LOWER layer, tap Space
 #define LOWER_SPC LT(_LOWER, KC_SPC)
@@ -151,10 +151,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * |RGB   |Prev  |Next  |Play/ | Vol- | Vol+ |                    |      |      |      |      |      |Reset |
      * |Efcts |Media |Media |Pause |      |      |                    |      |      |      |      |      |      |
      * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
-     * |BOOT  |      |      |      |      |Brght+|                    |Speed+| Hue+ | Sat+ | Val+ |      |BOOT  |
+     * |BOOT  |      |      |      |      |Brght+|                    |LVal+ | Hue+ | Sat+ |Speed+|      |BOOT  |
      * |Mode  |      |      |      |      |      |                    |      |      |      |      |      |Mode  |
      * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
-     * |Reset |      |      |      |      |Brght-|                    |Speed-| Hue- | Sat- | Val- |      |RGB   |
+     * |Reset |      |      |      |      |Brght-|                    |LVal- | Hue- | Sat- |Speed-|      |RGB   |
      * |      |      |      |      |      |      |                    |      |      |      |      |      |Toggle|
      * `------+------+------+------+------+------+------.      ,------+------+------+------+------+------+------'
      *                             |      |      |      |      |      |      |      |
@@ -163,8 +163,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      */
     [_EXTRAS] = LAYOUT_split_3x6_3(
         RGB_MOD, KC_MPRV, KC_MNXT, KC_MPLY, KC_VOLD, KC_VOLU,                    KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO, EE_CLR,
-        QK_BOOT, KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_BRIU,                    RGB_SPI, RGB_HUI, RGB_SAI, RGB_VAI, KC_NO, QK_BOOT,
-        EE_CLR,  KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_BRID,                    RGB_SPD, RGB_HUD, RGB_SAD, RGB_VAD, KC_NO, RGB_TOG,
+        QK_BOOT, KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_BRIU,                    RGB_VAI, RGB_HUI, RGB_SAI, RGB_SPI, KC_NO, QK_BOOT,
+        EE_CLR,  KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_BRID,                    RGB_VAD, RGB_HUD, RGB_SAD, RGB_SPD, KC_NO, RGB_TOG,
                                    KC_NO,   KC_NO,   KC_NO,                      KC_NO,   KC_NO,   KC_NO
     )
 };
@@ -252,7 +252,7 @@ bool get_ignore_mod_tap_interrupt(uint16_t keycode, keyrecord_t *record) {
         0xC0, 0xC1, 0xC2, 0xC3, 0xC4, 0xC5, 0xC6, 0xC7, 0xC8, 0xC9, 0xCA, 0xCB, 0xCC, 0xCD, 0xCE, 0xCF, 0xD0, 0xD1, 0xD2, 0xD3, 0xD4, 0x00
     };
 
-     static void oled_render_boot(bool bootloader) {
+    static void oled_render_boot(bool bootloader) {
         oled_clear();
         
          oled_set_cursor(0, 1);
@@ -299,6 +299,7 @@ bool get_ignore_mod_tap_interrupt(uint16_t keycode, keyrecord_t *record) {
         if (!is_keyboard_master()) {
             return OLED_ROTATION_180;
         }
+
         return rotation;
     }
 

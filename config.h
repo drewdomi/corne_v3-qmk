@@ -6,7 +6,7 @@
  *
  * File: config.h
  * Version: 1.0
- * Last updated: May 22, 2025
+ * Last updated: May 23, 2025
  */
 
 #pragma once
@@ -23,13 +23,13 @@
 #define ENCODER_RESOLUTION 4           // Encoder sensitivity (steps per detent)
 
 // === TAPPING AND TIMING CONFIGURATION ===
-#define TAPPING_TERM 230               // Base tapping term (ms) for mod-tap keys
+#define TAPPING_TERM 265               // Base tapping term (ms) for mod-tap keys
 #define TAPPING_TERM_PER_KEY           // Enable per-key tapping term customization
 #define QUICK_TAP_TERM 190             // Quick tap term (ms) for rapid typing
 #define TAPPING_TOGGLE 2               // Number of taps to toggle layer
 #define DEBOUNCE 5                     // Switch debounce time (ms)
 #define TAP_FLOW_ENABLE                // Enable Tap Flow feature
-#define TAP_FLOW_TERM 150              // Time window (ms) to disable holds during fast typing
+#define TAP_FLOW_TERM 125              // Time window (ms) to disable holds during fast typing
 
 // // === TAP-HOLD BEHAVIOR ===
 #define HOLD_ON_OTHER_KEY_PRESS        // Trigger hold on other key press
@@ -40,15 +40,15 @@
 #ifdef RGB_MATRIX_ENABLE
     #define RGB_MATRIX_LED_COUNT 54            // Total LEDs (27 per side)
     #define RGB_MATRIX_SPLIT { 27, 27 }        // LED distribution
-    #define RGB_MATRIX_MAXIMUM_BRIGHTNESS 120  // Brightness limit (0-255)
+    #define RGB_MATRIX_MAXIMUM_BRIGHTNESS 120  // Brightness limit (0-120)
     #define RGB_MATRIX_DEFAULT_VAL 80          // Default brightness
     #define RGB_MATRIX_DEFAULT_HUE 128         // Default color (0-255)
     #define RGB_MATRIX_DEFAULT_SAT 255         // Default saturation
     #define RGB_MATRIX_DEFAULT_MODE RGB_MATRIX_CYCLE_OUT_IN // Default effect
 
     // Enable EEPROM storage for RGB settings
-    #define RGB_MATRIX_FRAMEBUFFER_EFFECTS     // Enable framebuffer effects
-    #define RGB_MATRIX_KEYPRESSES              // Enable keypress effects
+    #define RGB_MATRIX_FRAMEBUFFER_EFFECTS          // Enable framebuffer effects
+    #define RGB_MATRIX_KEYPRESSES                   // Enable keypress effects
     
     #define ENABLE_RGB_MATRIX_SOLID_COLOR           // Static color
     #define ENABLE_RGB_MATRIX_BREATHING             // Breathing effect
