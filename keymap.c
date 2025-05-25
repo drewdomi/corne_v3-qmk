@@ -60,16 +60,18 @@ enum {
 #define HM_L RALT_T(KC_L)
 // Right Super when held, ";" when tapped (home row mods)
 #define HM_SCLN LGUI_T(KC_SCLN)
-// Mod-tap hold LOWER layer, tap Space
-#define LOWER_SPC LT(_LOWER, KC_SPC)
-// Mod-tap hold UPPER layer, tap Space
-#define UPPER_SPC LT(_UPPER, KC_SPC)
-// Mod-tap hold EXTRAS layer, tap Delete
-#define DEL_EXT LT(_EXTRAS, KC_DEL)
-// Mod-tap hold EXTRAS layer, tap Enter
-#define DEL_ENT LT(_EXTRAS, KC_ENT)
 // Mod-Tap Caps lock/Left Shift
 #define CAPS_SFT MT(MOD_LSFT, KC_CAPS)
+
+// Mod-Tap when held LOWER layer, when tapped Space
+#define LOWER_SPC LT(_LOWER, KC_SPC)
+// Layer-Tap when held UPPER layer, when tapped Space
+#define UPPER_SPC LT(_UPPER, KC_SPC)
+// Layer-Tap when held EXTRAS layer, when tapped Delete
+#define DEL_EXT LT(_EXTRAS, KC_DEL)
+// Layer-Tap when held EXTRAS layer, when tapped Enter
+#define DEL_ENT LT(_EXTRAS, KC_ENT)
+
 
 tap_dance_action_t tap_dance_actions[] = {
     [TAB_ESC] = ACTION_TAP_DANCE_DOUBLE(KC_TAB, KC_ESC),
@@ -254,7 +256,7 @@ bool get_ignore_mod_tap_interrupt(uint16_t keycode, keyrecord_t *record) {
 
     static void oled_render_boot(bool bootloader) {
         oled_clear();
-        
+
          oled_set_cursor(0, 1);
         if (bootloader) {
             oled_write_P(PSTR("Updating\n"), false);
@@ -262,7 +264,7 @@ bool get_ignore_mod_tap_interrupt(uint16_t keycode, keyrecord_t *record) {
         } else {
             oled_write_P(PSTR("Reseting..."), false);
         }
-        
+
         oled_render_dirty(true);
     }
 

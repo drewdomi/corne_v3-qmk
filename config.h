@@ -23,9 +23,9 @@
 #define ENCODER_RESOLUTION 4           // Encoder sensitivity (steps per detent)
 
 // === TAPPING AND TIMING CONFIGURATION ===
-#define TAPPING_TERM 300               // Base tapping term (ms) for mod-tap keys
+#define TAPPING_TERM 350               // Base tapping term (ms) for mod-tap keys
 #define TAPPING_TERM_PER_KEY           // Enable per-key tapping term customization
-#define QUICK_TAP_TERM 200             // Quick tap term (ms) for rapid typing
+#define QUICK_TAP_TERM 230             // Quick tap term (ms) for rapid typing
 #define TAPPING_TOGGLE 2               // Number of taps to toggle layer
 #define DEBOUNCE 5                     // Switch debounce time (ms)
 #define TAP_FLOW_ENABLE                // Enable Tap Flow feature
@@ -44,27 +44,25 @@
     #define RGB_MATRIX_DEFAULT_VAL 80          // Default brightness
     #define RGB_MATRIX_DEFAULT_HUE 128         // Default color (0-255)
     #define RGB_MATRIX_DEFAULT_SAT 255         // Default saturation
+
+    #define RGB_MATRIX_STARTUP_MODE RGB_MATRIX_SOLID_COLOR
+    #define RGB_MATRIX_STARTUP_HUE 128
+    #define RGB_MATRIX_STARTUP_SAT 255
+    #define RGB_MATRIX_STARTUP_VAL 80
+
     #define RGB_MATRIX_DEFAULT_MODE RGB_MATRIX_CYCLE_OUT_IN // Default effect
 
     // Enable EEPROM storage for RGB settings
     #define RGB_MATRIX_FRAMEBUFFER_EFFECTS          // Enable framebuffer effects
     #define RGB_MATRIX_KEYPRESSES                   // Enable keypress effects
-    
+
     #define ENABLE_RGB_MATRIX_SOLID_COLOR           // Static color
-    #define ENABLE_RGB_MATRIX_BREATHING             // Breathing effect
-    #define ENABLE_RGB_MATRIX_BAND_SPIRAL_VAL       // Spiral effect
-    #define ENABLE_RGB_MATRIX_CYCLE_ALL             // Color cycle
-    #define ENABLE_RGB_MATRIX_RAINBOW_MOVING_CHEVRON // Rainbow chevron
-    #define ENABLE_RGB_MATRIX_CYCLE_LEFT_RIGHT      // Left-right cycle
-    #define ENABLE_RGB_MATRIX_CYCLE_UP_DOWN         // Up-down cycle
     #define ENABLE_RGB_MATRIX_CYCLE_OUT_IN          // Outside-in cycle
-    #define ENABLE_RGB_MATRIX_TYPING_HEATMAP        // Heatmap on keypress
     #define ENABLE_RGB_MATRIX_SOLID_REACTIVE_SIMPLE // React to keypresses
-    
-    #define RGB_MATRIX_STARTUP_MODE RGB_MATRIX_SOLID_COLOR
-    #define RGB_MATRIX_STARTUP_HUE 128
-    #define RGB_MATRIX_STARTUP_SAT 255
-    #define RGB_MATRIX_STARTUP_VAL 80
+    #define ENABLE_RGB_MATRIX_TYPING_HEATMAP        // How hot is your WPM!
+    #define ENABLE_RGB_MATRIX_SOLID_REACTIVE_NEXUS      // Hue & value pulse away on the same column and row of a single key hit then fades value out
+    #define ENABLE_RGB_MATRIX_SOLID_REACTIVE_MULTINEXUS // Hue & value pulse away on the same column and row of multiple key hits then fades value out
+
 #endif
 
 
