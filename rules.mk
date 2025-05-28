@@ -5,14 +5,14 @@
 #
 # File: rules.mk
 # Version: 1.0
-# Last updated: May 21, 2025
+# Last updated: May 28, 2025
 
 # Bootloader Configuration
 BOOTLOADER = caterina
 
 # Core Features
 BOOTMAGIC_ENABLE = yes      # Enable Bootmagic Lite
-MOUSEKEY_ENABLE = yes       # Mouse keys
+MOUSEKEY_ENABLE = no       # Mouse keys
 EXTRAKEY_ENABLE = yes       # Audio control and System control
 CONSOLE_ENABLE = no         # Console for debug
 COMMAND_ENABLE = no         # Commands for debug and configuration
@@ -40,8 +40,10 @@ OLED_DRIVER = ssd1306       # OLED driver type
 OLED_TRANSPORT = i2c        # OLED communication protocol
 
 # Additional Features
-WPM_ENABLE = yes            # Enable words per minute calculation
+WPM_ENABLE = no            # Enable words per minute calculation
 QMK_SETTINGS = yes          # Enable QMK settings
 
 # Build Optimizations
 LTO_ENABLE = yes            # Link Time Optimization (reduces firmware size)
+
+CAPS_WORD_ENABLE = yes
