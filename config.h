@@ -40,6 +40,7 @@
 
 // === RGB MATRIX CONFIGURATION ===
 #ifdef RGB_MATRIX_ENABLE
+    #define RGB_MATRIX_TIMEOUT 1200000 // RGB matrix timeout in milliseconds (20 minutes)
     #define RGB_MATRIX_LED_COUNT 54            // Total LEDs (27 per side)
     #define RGB_MATRIX_SPLIT { 27, 27 }        // LED distribution
     #define RGB_MATRIX_MAXIMUM_BRIGHTNESS 120  // Brightness limit (0-120)
