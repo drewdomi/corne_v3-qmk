@@ -71,7 +71,8 @@ enum {
 #define DEL_EXT LT(_EXTRAS, KC_DEL)
 // Layer-Tap when held EXTRAS layer, when tapped Enter
 #define DEL_ENT LT(_EXTRAS, KC_ENT)
-
+// Momentary layer for UPPER
+#define UPPER MO(_UPPER)
 
 tap_dance_action_t tap_dance_actions[] = {
     [TAB_ESC] = ACTION_TAP_DANCE_DOUBLE(KC_TAB, KC_ESC),
@@ -93,7 +94,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * |Caps  |   Z  |   X  |   C  |   V  |   B  |                    |   N  |   M  |   ,  |   .  |   /  |Shift |
      * |Shift |      |      |      |      |      |                    |      |      |      |      |      |      |
      * `------+------+------+------+------+------+------.      ,------+------+------+------+------+------+------'
-     *                             | GUI  |UPPER |Del   |      |Ent   |LOWER | ALT  |
+     *                             | GUI  |UPPER |Del   |      |Ent   |LOWER |UPPER |
      *                             |      |Space |EXTRAS|      |EXTRAS|Space |      |
      *                             `--------------------'      `--------------------'
      */
@@ -101,7 +102,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         TD_TAB_ESC,     KC_Q,    KC_W,   KC_E,    KC_R,    KC_T,           KC_Y,    KC_U,      KC_I,    KC_O,    KC_P,    KC_BSPC,
         KC_LCTL,        HM_A,    HM_S,   HM_D,    HM_F,    KC_G,           KC_H,    HM_J,      HM_K,    HM_L,    HM_SCLN, KC_QUOT,
         CAPS_SFT,       KC_Z,    KC_X,   KC_C,    KC_V,    KC_B,           KC_N,    KC_M,      KC_COMM, KC_DOT,  KC_SLSH, KC_RSFT,
-                                KC_LGUI, UPPER_SPC, DEL_EXT,              DEL_ENT,  LOWER_SPC, KC_RALT
+                                KC_LGUI, UPPER_SPC, DEL_EXT,              DEL_ENT,  LOWER_SPC, UPPER
     ),
 
     /* LOWER
